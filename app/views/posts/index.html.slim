@@ -1,0 +1,4 @@
+ul.list-group.posts-list
+  - @posts.each do |post|
+    li.list-group-item= link_to post.title, post_path(post), class: 'post-link'
+p= link_to 'New post', new_post_path

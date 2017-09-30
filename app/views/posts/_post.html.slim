@@ -1,0 +1,7 @@
+div id="rate-post-#{post.id}"
+= post.body
+span class="pull-right like-badge" id="vote-post-#{post.id}"
+  - if current_user
+    | You've #{vote.show_value}d it
+.comments
+  / = render 'common/vote', resource: post, vote: vote
