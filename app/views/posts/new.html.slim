@@ -1,0 +1,10 @@
+= form_for @post do |f|
+  = render 'common/errors', resource: @post
+  .form-group
+    = f.label :title
+    = f.text_field :title, class: 'form-control'
+  .form-group
+    = f.label :body
+    = f.text_area :body, class: 'form-control'
+  .form-group
+    = f.submit 'Create post', class: 'btn btn-primary'

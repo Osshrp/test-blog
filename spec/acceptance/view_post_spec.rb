@@ -7,7 +7,8 @@ feature 'View post', %q{
 } do
   given(:user) { create(:user) }
   # given(:post) { create(:post_with_comments) }
-  given(:authors_post) { create(:post, user: user) }
+  given(:authors_post) { create(:post, user: user, is_published: true) }
+  given(:unpublished_post) { create(:post, user: user) }
 
   context 'Authenticated user' do
     before { sign_in(user) }
@@ -21,25 +22,19 @@ feature 'View post', %q{
       # end
     end
 
-    # scenario 'sees subscribe link' do
-    #   visit post_path(post)
-    #
-    #   expect(page).to have_link 'Subscribe'
-    # end
-
-    # scenario 'author does not see subscribe link' do
+    # scenario 'author sees publish link' do
     #   visit post_path(authors_post)
     #
-    #   expect(page).to_not have_link 'Subscribe'
-    #   expect(page).to have_link 'Unsubscribe'
+    #   expect(page).to have_link 'Publish'
+    #   expect(page).to_not have_link 'Unpublish'
     # end
 
-    # scenario 'if user has been unsubscribed, he see subscribe link' do
+    # scenario 'if post has been published, he see unbublish link' do
     #   visit post_path(authors_post)
     #
-    #   click_on 'Unsubscribe'
-    #   expect(page).to have_link 'Subscribe'
-    #   expect(page).to_not have_link 'Unsubscribe'
+    #   click_on 'Publish'
+    #   expect(page).to have_link 'Unpublish'
+    #   expect(page).to_not have_link 'Publish'
     # end
   end
 
@@ -54,10 +49,17 @@ feature 'View post', %q{
       # end
     end
 
-    # scenario 'does not see subscribe link' do
-    #   visit post_path(post)
+    # scenario 'does not see publish link' do
+    #   visit post_path(authors_post)
     #
-    #   expect(page).to_not have_link 'Subscribe'
+    #   expect(page).to_not have_link 'Publish'
     # end
+
+    scenario 'does not view the unpublished post' do
+      visit post_path(unpublished_post)
+
+      expect(page).to_not have_content 'MyString'
+      expect(page).to_not have_content 'MyText'
+    end
   end
 end

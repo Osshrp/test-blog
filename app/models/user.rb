@@ -5,4 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :posts
+
+  def author_of?(entity)
+    entity.user_id == id
+  end
 end

@@ -1,70 +1,92 @@
 require 'rails_helper'
 
 RSpec.describe PostsController, type: :controller do
-  let(:post) { create(:post) }
+  let(:published_post) { create(:post, is_published: true) }
+  let(:unpublished_post) { create(:post) }
   describe 'GET #index' do
-    let(:posts) { create_list(:post, 2) }
+    let(:unpublished_posts) { create_list(:post, 2) }
+    let(:published_posts) { create_list(:post, 2, is_published: true) }
 
     before { get :index }
-    it 'populates an array of all posts' do
-      expect(assigns(:posts)).to match_array(posts)
+
+    it 'populates an array of published posts' do
+      expect(assigns(:posts)).to match_array(published_posts)
     end
+
+    it 'does not populate an array with unpublished_posts' do
+      expect(assigns(:posts)).to_not match_array(unpublished_posts)
+    end
+
     it 'renders index view' do
       expect(response).to render_template :index
     end
   end
 
   describe 'GET #show' do
-    before { get :show, params: { id: post } }
+    context 'guest tries to see publish post' do
+      before { get :show, params: { id: published_post } }
 
-    it 'assigns requested post to @post' do
-      expect(assigns(:post)).to eq post
+      it 'assigns requested post to @post' do
+        expect(assigns(:post)).to eq published_post
+      end
+
+      it 'renders show view' do
+        expect(response).to render_template :show
+      end
     end
 
-    it 'renders show view' do
-      expect(response).to render_template :show
+    context 'guest tries to see unpublish post' do
+      before { get :show, params: { id: unpublished_post } }
+
+      it 'assigns requested post to @post' do
+        expect(assigns(:post)).to eq unpublished_post
+      end
+
+      it 'renders show view' do
+        expect(response).to redirect_to root_path
+      end
     end
   end
 
-  # describe 'GET #new' do
-  #   sign_in_user
-  #   before { get :new }
-  #   it 'assigns a new Post to @post' do
-  #     expect(assigns(:post)).to be_a_new(Post)
-  #   end
-  #
-  #   it 'renders new view' do
-  #     expect(response).to render_template :new
-  #   end
-  # end
-  #
-  # describe 'POST #create' do
-  #   sign_in_user
-  #   context 'with valid attributes' do
-  #
-  #     it 'associates post with the user' do
-  #       expect { post :create, params: { post: attributes_for(:post) } }
-  #         .to change(@user.posts, :count).by(1)
-  #     end
-  #
-  #     it 'redirects to show view' do
-  #       post :create, params: { post: attributes_for(:post) }
-  #       expect(response).to redirect_to post_path(assigns(:post))
-  #     end
-  #   end
-  #
-  #   context 'with invalid attributes' do
-  #     it 'does not save the post' do
-  #       expect { post :create, params: { post: attributes_for(:invalid_post) } }
-  #         .to_not change(Post, :count)
-  #     end
-  #
-  #     it 're-renders new view' do
-  #       post :create, params: { post: attributes_for(:invalid_post) }
-  #       expect(response).to render_template :new
-  #     end
-  #   end
-  # end
+  describe 'GET #new' do
+    sign_in_user
+    before { get :new }
+    it 'assigns a new Post to @post' do
+      expect(assigns(:post)).to be_a_new(Post)
+    end
+
+    it 'renders new view' do
+      expect(response).to render_template :new
+    end
+  end
+
+  describe 'POST #create' do
+    sign_in_user
+    context 'with valid attributes' do
+
+      it 'associates post with the user' do
+        expect { post :create, params: { post: attributes_for(:post) } }
+          .to change(@user.posts, :count).by(1)
+      end
+
+      it 'redirects to show view' do
+        post :create, params: { post: attributes_for(:post) }
+        expect(response).to redirect_to post_path(assigns(:post))
+      end
+    end
+
+    context 'with invalid attributes' do
+      it 'does not save the post' do
+        expect { post :create, params: { post: attributes_for(:invalid_post) } }
+          .to_not change(Post, :count)
+      end
+
+      it 're-renders new view' do
+        post :create, params: { post: attributes_for(:invalid_post) }
+        expect(response).to render_template :new
+      end
+    end
+  end
   #
   # describe 'PATCH #update' do
   #   sign_in_user
