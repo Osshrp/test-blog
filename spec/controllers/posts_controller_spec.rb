@@ -14,18 +14,18 @@ RSpec.describe PostsController, type: :controller do
     end
   end
 
-  # describe 'GET #show' do
-  #   before { get :show, params: { id: post } }
-  #
-  #   it 'assigns requested post to @post' do
-  #     expect(assigns(:post)).to eq post
-  #   end
-  #
-  #   it 'renders show view' do
-  #     expect(response).to render_template :show
-  #   end
-  # end
-  #
+  describe 'GET #show' do
+    before { get :show, params: { id: post } }
+
+    it 'assigns requested post to @post' do
+      expect(assigns(:post)).to eq post
+    end
+
+    it 'renders show view' do
+      expect(response).to render_template :show
+    end
+  end
+
   # describe 'GET #new' do
   #   sign_in_user
   #   before { get :new }

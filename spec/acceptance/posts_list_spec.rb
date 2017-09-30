@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 feature 'Posts list', %q{
-  In order to find the required answer,
+  In order to find the required post,
   the user should have the opportunity
   to view the list of posts
 } do

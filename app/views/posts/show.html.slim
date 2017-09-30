@@ -1,0 +1,7 @@
+.panel.panel-default
+  .panel-heading
+    = @post.title
+  .panel-body
+    div class="post" data-id="#{@post.id}" id="post-#{@post.id}"
+      .post-body
+        = render @post
