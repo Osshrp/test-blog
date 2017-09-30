@@ -35,14 +35,41 @@ RSpec.describe PostsController, type: :controller do
       end
     end
 
-    context 'guest tries to see unpublish post' do
+    context 'author tries to see unpublish post' do
+      sign_in_user
+      let(:authors_unpublished_post) { create(:post, user: @user) }
+      before { get :show, params: { id: authors_unpublished_post } }
+
+      it 'assigns requested post to @post' do
+        expect(assigns(:post)).to eq authors_unpublished_post
+      end
+
+      it 'renders show view' do
+        expect(response).to render_template :show
+      end
+    end
+
+    context 'guest tries to see unpublished post' do
       before { get :show, params: { id: unpublished_post } }
 
       it 'assigns requested post to @post' do
         expect(assigns(:post)).to eq unpublished_post
       end
 
-      it 'renders show view' do
+      it 'redirects to root path' do
+        expect(response).to redirect_to root_path
+      end
+    end
+
+    context 'another user tries to see unpublished post' do
+      sign_in_user
+      before { get :show, params: { id: unpublished_post } }
+
+      it 'assigns requested post to @post' do
+        expect(assigns(:post)).to eq unpublished_post
+      end
+
+      it 'redirects to root path' do
         expect(response).to redirect_to root_path
       end
     end
