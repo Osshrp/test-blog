@@ -4,6 +4,7 @@ class PostsController < ApplicationController
 
   def index
     @posts = Post.where(is_published: true)
+    @posts = Post.where(user: current_user) if params[:my_posts]
     respond_with @posts
   end
 
@@ -29,6 +30,11 @@ class PostsController < ApplicationController
 
   def update
     @post.update(post_params)
+    respond_with @post
+  end
+
+  def destroy
+    @post.destroy
     respond_with @post
   end
 

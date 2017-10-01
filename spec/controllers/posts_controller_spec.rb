@@ -177,34 +177,34 @@ RSpec.describe PostsController, type: :controller do
       end
     end
   end
-  #
-  # describe 'DELETE #destroy' do
-  #   sign_in_user
-  #   let!(:users_post) { create(:post, user: @user) }
-  #   before { post }
-  #
-  #   context 'author tries to delete post' do
-  #     it 'deletes post' do
-  #       expect { delete :destroy, params: { id: users_post } }
-  #         .to change(Post, :count).by(-1)
-  #     end
-  #
-  #     it 'redirects to index view' do
-  #       delete :destroy, params: { id: users_post }
-  #       expect(response).to redirect_to posts_path
-  #     end
-  #   end
-  #
-  #   context 'user tries to delete post that does not belongs to him' do
-  #     it 'does not deletes post' do
-  #       expect { delete :destroy, params: { id: post } }
-  #         .to_not change(Post, :count)
-  #     end
-  #
-  #     it 'redirects to posts index view' do
-  #       delete :destroy, params: { id: post }
-  #       expect(response).to redirect_to posts_path
-  #     end
-  #   end
-  # end
+
+  describe 'DELETE #destroy' do
+    sign_in_user
+    let!(:users_post) { create(:post, user: @user) }
+    before { users_post }
+
+    context 'author tries to delete post' do
+      it 'deletes post' do
+        expect { delete :destroy, params: { id: users_post } }
+          .to change(Post, :count).by(-1)
+      end
+
+      it 'redirects to index view' do
+        delete :destroy, params: { id: users_post }
+        expect(response).to redirect_to posts_path
+      end
+    end
+
+    context 'user tries to delete post that does not belongs to him' do
+      it 'does not deletes post' do
+        expect { delete :destroy, params: { id: published_post } }
+          .to_not change(Post, :count)
+      end
+
+      it 'redirects to posts index view' do
+        delete :destroy, params: { id: published_post }
+        expect(response).to redirect_to posts_path
+      end
+    end
+  end
 end
