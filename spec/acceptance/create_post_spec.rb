@@ -14,7 +14,7 @@ feature 'Create post', %q{
     click_new_post_link
     fill_in 'Title', with: 'Question title'
     fill_in 'Body', with: 'text text'
-    click_on 'Create'
+    click_on 'Save'
 
     # expect(page).to have_content 'Your post successfully created'
     expect(page).to have_content 'Question title'
@@ -25,7 +25,7 @@ feature 'Create post', %q{
     sign_in(user)
 
     click_new_post_link
-    click_on 'Create'
+    click_on 'Save'
 
     expect(page).to have_content "Title can't be blank"
     expect(page).to have_content "Body can't be blank"

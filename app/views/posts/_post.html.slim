@@ -1,5 +1,9 @@
 div id="rate-post-#{post.id}"
 = post.body
 span class="pull-right like-badge" id="post-#{post.id}"
+p
+  = link_to 'Edit post', edit_post_path(post)
+  '
+  = link_to 'Delete post', post, method: :delete
 .comments
   / = render '', resource: post, vote: vote

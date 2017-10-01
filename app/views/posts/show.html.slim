@@ -1,5 +1,11 @@
 .panel.panel-default
   .panel-heading
+    span class="pull-right like-badge"
+      - if current_user.try(:author_of?, @post)
+        - if @post.is_published?
+          p published
+        - else
+          p unpublished
     = @post.title
   .panel-body
     div class="post" data-id="#{@post.id}" id="post-#{@post.id}"

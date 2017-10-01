@@ -114,69 +114,69 @@ RSpec.describe PostsController, type: :controller do
       end
     end
   end
-  #
-  # describe 'PATCH #update' do
-  #   sign_in_user
-  #   let!(:users_post) { create(:post, user: @user) }
-  #
-  #   context 'with valid attributes' do
-  #     it 'assigns the requested post to @post' do
-  #       patch :update, params: { id: users_post,
-  #         post: attributes_for(:post) }, format: :js
-  #       expect(assigns(:post)).to eq users_post
-  #     end
-  #
-  #     it 'change post attributes' do
-  #       patch :update, params: { id: users_post,
-  #         post: { title: 'new_title', body: 'new_body' } }, format: :js
-  #       users_post.reload
-  #       expect(users_post.title).to eq 'new_title'
-  #       expect(users_post.body).to eq 'new_body'
-  #     end
-  #
-  #     it 'redirects to updated @post' do
-  #       patch :update, params: { id: users_post,
-  #         post: attributes_for(:post) }, format: :js
-  #       expect(response).to render_template :update
-  #     end
-  #   end
-  #
-  #   context 'with invalid attributes' do
-  #     let(:title) { users_post.title }
-  #     let(:body) { users_post.body }
-  #     before do
-  #       patch :update, params: { id: users_post,
-  #         post: { title: 'new_title', body: nil } }, format: :js
-  #     end
-  #     it 'does not change @post attributes' do
-  #       users_post.reload
-  #       expect(users_post.title).to eq title
-  #       expect(users_post.body).to eq body
-  #     end
-  #
-  #     it 're-renders edit view' do
-  #       expect(response).to render_template :update
-  #     end
-  #   end
-  #
-  #   context 'user tries to update post that does not belong to him' do
-  #     let(:title) { post.title }
-  #     let(:body) { post.body }
-  #     before do
-  #       patch :update, params: { id: post,
-  #         post: { title: 'new_title', body: 'new_body' } }, format: :js
-  #     end
-  #     it 'does not update post attributes' do
-  #       post.reload
-  #       expect(post.title).to eq title
-  #       expect(post.body).to eq body
-  #     end
-  #
-  #     it 'returns 403 status' do
-  #       expect(response).to have_http_status(403)
-  #     end
-  #   end
-  # end
+
+  describe 'PATCH #update' do
+    sign_in_user
+    let!(:users_post) { create(:post, user: @user) }
+
+    context 'with valid attributes' do
+      it 'assigns the requested post to @post' do
+        patch :update, params: { id: users_post,
+          post: attributes_for(:post) }
+        expect(assigns(:post)).to eq users_post
+      end
+
+      it 'change post attributes' do
+        patch :update, params: { id: users_post,
+          post: { title: 'new_title', body: 'new_body' } }
+        users_post.reload
+        expect(users_post.title).to eq 'new_title'
+        expect(users_post.body).to eq 'new_body'
+      end
+
+      it 'redirects to updated @post' do
+        patch :update, params: { id: users_post,
+          post: attributes_for(:post) }
+        expect(response).to redirect_to post_path(users_post)
+      end
+    end
+
+    context 'with invalid attributes' do
+      let(:title) { users_post.title }
+      let(:body) { users_post.body }
+      before do
+        patch :update, params: { id: users_post,
+          post: { title: 'new_title', body: nil } }
+      end
+      it 'does not change @post attributes' do
+        users_post.reload
+        expect(users_post.title).to eq title
+        expect(users_post.body).to eq body
+      end
+
+      it 're-renders edit view' do
+        expect(response).to render_template :edit
+      end
+    end
+
+    context 'user tries to update post that does not belong to him' do
+      let(:title) { unpublished_post.title }
+      let(:body) { unpublished_post.body }
+      before do
+        patch :update, params: { id: unpublished_post,
+          post: { title: 'new_title', body: 'new_body' } }
+      end
+      it 'does not update post attributes' do
+        unpublished_post.reload
+        expect(unpublished_post.title).to eq title
+        expect(unpublished_post.body).to eq body
+      end
+
+      it 'returns 403 status' do
+        expect(response).to have_http_status(403)
+      end
+    end
+  end
   #
   # describe 'DELETE #destroy' do
   #   sign_in_user

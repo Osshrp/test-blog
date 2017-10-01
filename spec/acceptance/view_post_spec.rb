@@ -16,6 +16,7 @@ feature 'View post', %q{
       sign_in(user)
       visit post_path(authors_post)
 
+      expect(page).to have_content 'published'
       expect(page).to have_content 'MyString'
       expect(page).to have_content 'MyText'
       # post.answers.each do |answer|
@@ -27,6 +28,7 @@ feature 'View post', %q{
       sign_in(user)
       visit post_path(unpublished_post)
 
+      expect(page).to have_content 'unpublished'
       expect(page).to have_content 'MyString'
       expect(page).to have_content 'MyText'
       # post.answers.each do |answer|
