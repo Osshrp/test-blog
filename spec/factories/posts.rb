@@ -21,6 +21,6 @@ FactoryGirl.define do
 
   factory :invalid_post, class: 'Post' do
     title nil
-    boly nil
+    body nil
   end
 end

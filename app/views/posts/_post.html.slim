@@ -6,4 +6,14 @@ p
   '
   = link_to 'Delete post', post, method: :delete
 .comments
-  / = render '', resource: post, vote: vote
+  div class="post-#{post.id}-comments"
+    ul class="post-#{post.id}-comments-list list-group"
+      = render 'comments/comment', post: post
+  - if user_signed_in?
+    = form_for [@post, comment = @post.comments.new] do |f|
+      .comment-errors
+      .form-group
+        = f.label :body, 'Comment'
+        = f.text_area :body, class: 'form-control'
+      .form-group
+        = f.submit 'New comment', class: 'btn btn-primary'
