@@ -6,5 +6,9 @@
   .form-group
     = f.label :body
     = f.text_area :body, class: 'form-control'
+  .forn-group
+    = f.label :is_published, 'publicate'
+    '
+    = f.check_box :is_published
   .form-group
     = f.submit 'Save', class: 'btn btn-primary'

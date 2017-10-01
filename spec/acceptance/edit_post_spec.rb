@@ -31,10 +31,12 @@ feature 'Post editing', %q{
       click_on 'Edit post'
       fill_in 'Title', with: 'edited post title'
       fill_in 'Body', with: 'edited post body'
+      check 'publicate'
       click_on 'Save'
 
       expect(page).to_not have_content post.body
       expect(page).to have_content 'edited post body'
+      expect(page).to have_content 'published'
       expect(page).to_not have_selector 'text_field'
       expect(page).to_not have_selector 'textarea'
       expect(page).to have_link 'Edit post'

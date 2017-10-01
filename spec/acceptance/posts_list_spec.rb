@@ -8,6 +8,7 @@ feature 'Posts list', %q{
   given!(:unpublished_posts) { create_list(:post, 2) }
   given!(:published_posts) { create_list(:post, 2, is_published: true) }
   given(:user) { create(:user) }
+  given!(:users_posts) { create_list(:post, 2, user: user) }
 
   scenario 'Authenticated user views list of posts' do
     sign_in(user)
@@ -16,6 +17,16 @@ feature 'Posts list', %q{
 
   scenario 'Unauthenticated user views list of post' do
     visit_and_check_post
+  end
+
+  scenario 'Author sees list of all his posts' do
+    sign_in(user)
+    visit root_path
+
+    click_on 'My posts'
+
+    expect(page).to have_content users_posts.first.title
+    expect(page).to have_content users_posts.last.title
   end
 
   private
