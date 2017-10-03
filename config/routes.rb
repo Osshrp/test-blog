@@ -6,4 +6,6 @@ Rails.application.routes.draw do
   resources :posts do
     resources :comments, shallow: true
   end
+
+  get 'tags/:tag', to: 'posts#index', as: :tag
 end

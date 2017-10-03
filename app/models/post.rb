@@ -3,4 +3,8 @@ class Post < ApplicationRecord
   has_many :comments
 
   validates :title, :body, presence: true
+
+  acts_as_taggable_on :tags
+
+  self.per_page = 5
 end

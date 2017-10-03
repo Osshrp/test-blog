@@ -24,7 +24,7 @@ html lang="en"
           = link_to 'TestBlog', root_path, class: 'navbar-brand'
           .navbar-collapse.collapse.navbar-responsive-collapse
             ul.nav.navbar-nav
-              li= link_to "Link 1", "/path1"
+              li= link_to "Link 1", "#"
               - if user_signed_in?
                 li= link_to 'My posts', posts_path(my_posts: '1')
                 li= link_to 'Sign out', destroy_user_session_path, method: :delete
@@ -38,13 +38,13 @@ html lang="en"
           = bootstrap_flash
           = yield
         .col-lg-3
-          .well.sidebar-nav
-            h3 Sidebar
-            ul.nav.nav-list
-              li.nav-header Sidebar
-              li= link_to "Link 1", "/path1"
-              li= link_to "Link 2", "/path2"
-              li= link_to "Link 3", "/path3"
+          - if @tags
+            .well.sidebar-nav
+              h3 Tags cloud
+              - tag_cloud(@tags, %w(css1 css2 css3 css4)) do |tag, css_class|
+                '
+                = link_to tag.name, tag_path(tag.name), class: css_class
+
 
       footer
         p &copy; Company 2017

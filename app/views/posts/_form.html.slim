@@ -4,6 +4,11 @@
     = f.label :title
     = f.text_field :title, class: 'form-control'
   .form-group
+    = f.label :tag_list, 'Tags (separated by commas)'
+    = f.text_field :tag_list, class: 'form-control'
+    p Tags:
+      #{post.tag_list}
+  .form-group
     = f.label :body
     = f.text_area :body, class: 'form-control'
   .forn-group
