@@ -11,9 +11,9 @@ class PostsController < ApplicationController
       @posts = Post.where(is_published: true)
         .page(params[:page]).order('created_at DESC')
     end
+
     @posts = Post.where(user: current_user)
       .page(params[:page]).order('created_at DESC') if params[:my_posts]
-
 
     respond_with @posts
   end

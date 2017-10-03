@@ -1,5 +1,7 @@
 ul.list-group.posts-list
   - @posts.each do |post|
-    li.list-group-item= link_to post.title, post_path(post), class: 'post-link'
+    li.list-group-item
+      = link_to post.title, post_path(post), class: 'post-link'
+      span.pull-right.like-badge by: #{post.user.name}
 p= link_to 'New post', new_post_path, class: 'btn btn-primary'
 = will_paginate @posts

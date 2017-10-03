@@ -1,5 +1,6 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
+  before_action :set_comment, only: [:edit, :destroy, :update]
 
   def create
     @post = Post.find(params[:post_id])
@@ -9,8 +10,16 @@ class CommentsController < ApplicationController
     )
   end
 
+  def edit
+    respond_with(@comment)
+  end
+
+  def update
+    @comment.update(comment_params)
+    respond_with(@comment, location: post_path(@comment.post))
+  end
+
   def destroy
-    @comment = current_user.comments.find_by(id: params[:id])
     if @comment
       respond_with(@comment.destroy, location: post_path(@comment.post))
     else
@@ -22,5 +31,9 @@ class CommentsController < ApplicationController
 
   def comment_params
     params.require(:comment).permit(:body)
+  end
+
+  def set_comment
+    @comment = current_user.comments.find_by(id: params[:id])
   end
 end

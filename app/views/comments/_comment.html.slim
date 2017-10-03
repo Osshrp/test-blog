@@ -2,10 +2,13 @@
   p Comments:
   - post.comments.each do |comment|
     - if comment.persisted?
-      li class='well list-group-item' id="post-comment-#{comment.id}"
-        = comment.body
+      div id="comment-#{comment.id}"
+        li class='well list-group-item'
+          = comment.body
+          p by #{comment.user.name}
+        p
         .comment-delete
           - if current_user && current_user.author_of?(comment)
-            = link_to 'Edit', edit_comment_path
+            = link_to 'Edit', edit_comment_path(comment)
             '
             = link_to 'Delete', comment, method: :delete

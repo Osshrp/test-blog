@@ -1,7 +1,7 @@
 div id="rate-post-#{post.id}"
 = post.body
 span class="pull-right like-badge" id="post-#{post.id}"
-p Tags: #{ raw(post.tag_list.map { |t| link_to t, tag_path(t) }.join(', ')) }
+
 br
 - if current_user && current_user.author_of?(post)
   p
