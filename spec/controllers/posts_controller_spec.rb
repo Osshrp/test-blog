@@ -171,10 +171,6 @@ RSpec.describe PostsController, type: :controller do
         expect(unpublished_post.title).to eq title
         expect(unpublished_post.body).to eq body
       end
-
-      it 'returns 403 status' do
-        expect(response).to have_http_status(403)
-      end
     end
   end
 

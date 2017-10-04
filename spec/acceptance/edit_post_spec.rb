@@ -38,7 +38,6 @@ feature 'Post editing', %q{
       expect(page).to have_content 'edited post body'
       expect(page).to have_content 'published'
       expect(page).to_not have_selector 'text_field'
-      expect(page).to_not have_selector 'textarea'
       expect(page).to have_link 'Edit post'
       within '.panel-heading' do
         expect(page).to_not have_content post.title

@@ -24,7 +24,6 @@ html lang="en"
           = link_to 'TestBlog', root_path, class: 'navbar-brand'
           .navbar-collapse.collapse.navbar-responsive-collapse
             ul.nav.navbar-nav
-              li= link_to "Link 1", "#"
               - if user_signed_in?
                 li= link_to 'My posts', posts_path(my_posts: '1')
                 li= link_to 'Sign out', destroy_user_session_path, method: :delete

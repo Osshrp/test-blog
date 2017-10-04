@@ -11,5 +11,5 @@
     div class="post" data-id="#{@post.id}" id="post-#{@post.id}"
       .post-body
         = render @post
-p Author: #{@post.user.name}
+p Author: #{@post.user.email}
 p Tags: #{ raw(@post.tag_list.map { |t| link_to t, tag_path(t) }.join(', ')) }

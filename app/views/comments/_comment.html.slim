@@ -5,7 +5,7 @@
       div id="comment-#{comment.id}"
         li class='well list-group-item'
           = comment.body
-          p by #{comment.user.name}
+          p by #{comment.user.email}
         p
         .comment-delete
           - if current_user && current_user.author_of?(comment)

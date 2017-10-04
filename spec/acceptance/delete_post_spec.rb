@@ -15,7 +15,6 @@ feature 'Author deletes post', %q{
     visit post_path(post)
     click_on 'Delete post'
 
-    expect(page).to have_content 'Post was successfully destroyed'
     expect(page).to have_no_content post.title
   end
 

@@ -11,19 +11,27 @@ class CommentsController < ApplicationController
   end
 
   def edit
-    respond_with(@comment)
+    if @comment.can_change?
+      respond_with(@comment)
+    else
+      redirect_to post_path(@comment.post)
+    end
   end
 
   def update
-    @comment.update(comment_params)
-    respond_with(@comment, location: post_path(@comment.post))
+    if @comment.can_change?
+      @comment.update(comment_params)
+      respond_with(@comment, location: post_path(@comment.post))
+    else
+      respond_with(@comment, location: post_path(@comment.post))
+    end
   end
 
   def destroy
-    if @comment
+    if @comment && @comment.can_change?
       respond_with(@comment.destroy, location: post_path(@comment.post))
     else
-      respond_with('You dont have rights to delete with comment', location: posts_path)
+      redirect_to root_path
     end
   end
 
