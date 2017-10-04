@@ -4,6 +4,7 @@ class Post < ApplicationRecord
 
   validates :title, :body, presence: true
 
+  acts_as_taggable
   acts_as_taggable_on :tags
 
   self.per_page = 5
