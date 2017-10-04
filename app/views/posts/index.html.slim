@@ -2,5 +2,6 @@ ul.list-group.posts-list
   - @posts.each do |post|
     li.list-group-item
       = link_to post.title, post_path(post), class: 'post-link'
-p= link_to 'New post', new_post_path, class: 'btn btn-primary'
+if current_user
+  p= link_to 'New post', new_post_path, class: 'btn btn-primary'
 = will_paginate @posts
