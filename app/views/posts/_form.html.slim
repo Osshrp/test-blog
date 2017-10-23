@@ -1,0 +1,19 @@
+= form_for post do |f|
+  = render 'common/errors', resource: post
+  .form-group
+    = f.label :title
+    = f.text_field :title, class: 'form-control'
+  .form-group
+    = f.label :tag_list, 'Tags (separated by commas)'
+    = f.text_field :tag_list, class: 'form-control'
+    p Tags:
+      #{post.tag_list}
+  .form-group
+    = f.label :body
+    = f.text_area :body, class: 'form-control'
+  .forn-group
+    = f.label :is_published, 'publicate'
+    '
+    = f.check_box :is_published
+  .form-group
+    = f.submit 'Save', class: 'btn btn-primary'

@@ -1,0 +1,14 @@
+- if post.comments.exists?
+  p Comments:
+  - post.comments.each do |comment|
+    - if comment.persisted?
+      div id="comment-#{comment.id}"
+        li class='well list-group-item'
+          = comment.body
+          p by #{comment.user.email}
+        p
+        .comment-delete
+          - if current_user && current_user.author_of?(comment)
+            = link_to 'Edit', edit_comment_path(comment)
+            '
+            = link_to 'Delete', comment, method: :delete
